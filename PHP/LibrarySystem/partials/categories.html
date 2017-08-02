@@ -1,0 +1,123 @@
+<div ng-include="'/partials/nav/navigation.html'"></div>
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="col-lg-12 margin-tb  page-header">
+          <div class="pull-left">
+              <h1>Books</h1>
+          </div>
+          <div class="pull-right" style="padding-top:30px">
+              <div class="box-tools" style="display:inline-table">
+                <div class="input-group">
+                    <input id ="search_category" type="text" class="form-control input-sm ng-valid ng-dirty" placeholder="Search Category" ng-change="searchDB()" ng-model="searchText" name="table_search" title="" tooltip="" data-original-title="Min character length is 3">
+                    <span class="input-group-addon">Search</span>
+                </div>
+
+              </div>
+                <button id ="new_category" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-category-modal" style="vertical-align:top;">
+                <i class="fa fa-plus"></i> New Category
+                 </button>
+
+          </div>
+      </div>
+
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <th>Category Code</th>
+          <th>Description</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="categ in FilteredCategoryList">
+             <td>{{ categ.categ_code }}</td>
+             <td>{{ categ.categ_desc }}</td>
+             <td>
+             </button><button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit-category-modal" ng-click ="setCategory(categ)"> <i class="fa fa-pencil"></i></button>
+              <button type="button" class="btn btn-danger" ng-click="deleteCategory(categ)"><i class="fa fa-times"></i>
+             </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div uib-pagination
+           total-items="categoryTotalItems"
+           ng-model="categoryCurrentPage"
+           max-size="categoryMaxSize"
+           class="pagination-sm"
+           boundary-links="true"
+           num-pages="categoryNumPages"
+           items-per-page ="categoryNumPerPage"
+           ng-change="categoryPageChanged()">
+
+      </div>
+
+
+      <!-- Add Modal -->
+      <div class="modal fade" id="add-category-modal" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Category Details</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form ng-submit="addCategory()">
+                      <span>Catetogy Code</span>
+                      <input type="text" ng-model="category.code"class="form-control" />
+                      <br>
+                      <span>Description</span>
+                      <textarea class="form-control" rows="5" ng-model ="category.desc" />
+
+
+
+                      <div class="modal-footer">
+                          <button type="submit" class="btn btn-default" >Add</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </form>
+                </div>
+              </div>
+
+          </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <div class="modal fade" id="edit-category-modal" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Category Details</h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <form  ng-submit="editCategory()">
+                      <span>Category Code</span>
+                      <input type="text" ng-model ="category.code" class="form-control" />
+                      <br>
+
+                      <span>Description</span>
+                      <input type="text" ng-model ="category.desc"class="form-control" />
+                      <br>
+
+
+                      <div class="modal-footer">
+                          <input type="submit" class="btn btn-default" />
+                          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click ="modalCancel()">Cancel</button>
+                      </div>
+                    </form>
+
+                </div>
+              </div>
+
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>

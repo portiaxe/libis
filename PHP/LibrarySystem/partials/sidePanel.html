@@ -1,0 +1,12 @@
+<div class="navbar-default sidebar" role="navigation" ng-controller="DashboardController">
+	<div class="sidebar-nav navbar-collapse">
+		<ul class="nav" id="side-menu">
+			<li ng-show="isLogin" class="back-sidebar-menu-item">
+				<a ng-click="clickHome()" class="{{dashboardclass}}" style="cursor:pointer"><i class="lnr lnr-screen"></i> Dashboard</a>
+			</li>
+			<li ng-repeat="module in moduleList" ng-show="module.hasModule =='true' || module.name=='Request'" class="back-sidebar-menu-item">
+				<a ng-click="changeactivetab({module: module.url})" class="{{module.className}}" style="cursor:pointer"><i class="{{module.icon}}"></i> {{module.name}}</a>
+			</li>
+		</ul>
+	</div>
+</div>

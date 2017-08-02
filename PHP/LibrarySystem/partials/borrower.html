@@ -1,0 +1,115 @@
+<div ng-include="'/partials/nav/navigation.html'"></div>
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-lg-12 margin-tb  page-header">
+
+          <div class="pull-left">
+              <h1>Borrowers</h1>
+          </div>
+          <div class="pull-right" style="padding-top:30px">
+              <div class="box-tools" style="display:inline-table">
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control ng-valid ng-dirty" placeholder="Search book" ng-change="searchDB()" ng-model="search" name="table_search" title="" tooltip="" data-original-title="Min character length is 3">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" ng-click="searchBook()">
+                          <i class="fa fa-search"></i>
+                      </button>
+                    </span>
+                </div>
+
+              </div>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-book-modal" style="vertical-align:top;" ng-click ="showAddModal()">
+                <i class="fa fa-plus"></i> New Borrower
+                 </button>
+
+          </div>
+      </div>
+
+
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <th>Firstname</th>
+          <th>Middlename</th>
+          <th>Lastname</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="b in FilteredBorrowerList">
+             <td>{{b.borrower_fname}}</td>
+             <td>{{b.borrower_mname}}</td>
+             <td>{{b.borrower_lname}}</td>
+             <td>
+               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#borrow-history-modal"  ng-click="viewhistory(b)">View history</i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div uib-pagination
+           total-items="borrowerTotalItems"
+           ng-model="borrowerCurrentPage"
+           max-size="borrowerMaxSize"
+           boundary-links="true"
+           items-per-page ="borrowerNumPerPage"
+           ng-change = "borrowerPageChanged()"
+           >
+      </div>
+
+
+      <!-- Add Modal -->
+      <div class="modal fade" id="borrow-history-modal" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Borrow History Details</h4>
+                  </div>
+                  <div class="modal-body">
+
+
+                      <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <th>Category Code</th>
+                          <th>Book Code</th>
+                          <th>Book</th>
+                          <th>Borrowed Date</th>
+                          <th>Returned Date</th >
+                          <th>Due Date</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="b in FilteredBorrowerHistoryList">
+                             <td>{{b.categ_code}}</td>
+                             <td>{{b.book_code}}</td>
+                             <td>{{b.book_title}}</td>
+                             <td>{{b.borrow_date}}</td>
+                             <td>{{b.borrow_return}}</td>
+                             <td>{{b.due_date}}</td>
+                             <td>
+                               <button ng-if="b.borrow_return == null" type="button" class="btn btn-success">Return</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div uib-pagination
+                           total-items="borrowerHistoryTotalItems"
+                           ng-model="borrowerHistoryCurrentPage"
+                           max-size="borrowerHistoryMaxSize"
+                           boundary-links="true"
+                           items-per-page ="borrowerHistoryNumPerPage"
+                           ng-change = "borrowerHistoryPageChanged()"
+                           >
+
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
