@@ -16,16 +16,19 @@
   		echo json_encode($q->row());
     }
     public function getBooks(){
-      if( $this->session->userdata('acc_type') != 'admin')
-        header('HTTP/1.0 403 Forbidden');
-      else{
-         $result = $this->BookModel->getBooks();
+     //if( $this->session->userdata('acc_type') != 'admin')
+     //   header('HTTP/1.0 403 Forbidden');
+     // else{
+     //    $result = $this->BookModel->getBooks();
+     //    $this->output
+     //    ->set_content_type('application/json')
+     //    ->set_output(json_encode($result));
+     // }
+
+    $result = $this->BookModel->getBooks();
          $this->output
          ->set_content_type('application/json')
          ->set_output(json_encode($result));
-      }
-
-
 
     }
 
