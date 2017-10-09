@@ -38,9 +38,15 @@
 
   </head>
   <body ng-app="LibraryPortalApp">
-			<ui-view></ui-view>
-        <!-- /#page-wrapper -->
 
+    <div ng-controller="MainController">
+
+      <div  ng-if="isAuthenticated()">
+        <div ng-include="'/partials/nav/navigation.html'"></div>
+      </div>
+      <ui-view></ui-view>
+      <!-- /#page-wrapper -->
+    </div>
     <!-- jQuery -->
     <script type="text/javascript" src="<?php echo base_url()?>bower_components/jquery/dist/jquery.js"></script>
 
@@ -98,7 +104,15 @@
     <script src="<?php echo base_url()?>ng/controllers/ProfileController.js"></script>
     <script src="<?php echo base_url()?>ng/services/ProfileService.js"></script>
 
+    <script>
+      app.controller('MainController', function($rootScope, $scope, $state,
+      		Access) {
+            $scope.isAuthenticated =function(){
+              return  Access.isAuthenticated();
+            }
 
+          });
+    </script>
 
   </body>
 </html>

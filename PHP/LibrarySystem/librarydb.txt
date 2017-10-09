@@ -51,4 +51,72 @@ create table borrower_account(
 	foreign key(borrower_id) references borrower(borrower_id)
 );
 
+create table lib_accounts(
+	lib_acc_id int primary key auto_increment not null,
+	user_name varchar(10) not null unique,
+	user_pass nvarchar(1) not null,
+	acc_fname varchar(100) not null,
+	acc_mname varchar(100) not null,
+	acc_lname varchar(100) not null,
+	user_type enum('admin','user') default 'user'
+);
+
+--stored procedures--
+
+--------------------------
+DELIMITER //
+CREATE PROCEDURE GetAccount(
+	IN username VARCHAR(10),
+	IN password VARCHAR(10)
+)
+BEGIN
+	SELECT *
+	  FROM lib_accounts li
+	 WHERE li.user_name = username COLLATE utf8_unicode_ci  AND 
+	       li.user_pass = password COLLATE utf8_unicode_ci;
+END//
+DELIMITER ;
+------------------------
+
+
+-------------------------
+DELIMITER //
+CREATE PROCEDURE GetAccountById(
+	IN id int
+)
+BEGIN
+	SELECT *
+	  FROM lib_accounts li
+	 WHERE lib_acc_id = id;
+END//
+DELIMITER ;
+-------------------------
+
+
+-------------------------
+DELIMITER //
+CREATE PROCEDURE GetBooks()
+BEGIN
+	SELECT *
+	  FROM books;
+END//
+DELIMITER ;
+-------------------------
+
+
+-------------------------
+DELIMITER //
+CREATE PROCEDURE GetBooksWithCategory()
+BEGIN
+	 SELECT * 
+		FROM book b
+		LEFT
+		JOIN book_category bc
+		  ON bc.book_id = b.book_id
+		JOIN category c
+		  ON bc.categ_id = c.categ_id;
+END//
+DELIMITER ;
+-------------------------
+
 
